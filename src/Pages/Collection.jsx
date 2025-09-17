@@ -1,7 +1,7 @@
 import Navbar from "../Components/Navbar";
 import { useSelector } from "react-redux";
-import CountryCard from "../Components/CountryCard";
-import { savedCountry, removeCountry } from "../redux/savedSlice";
+import HeartBtn from "../Components/HeartBtn";
+import { Link } from "react-router-dom";
 
 const Collection = () => {
   const savedCountries = useSelector((state) => state.saved.savedCountries);
@@ -15,7 +15,13 @@ const Collection = () => {
           <p>Inga sparade länder</p>
         ) : (
           savedCountries.map((country) => (
-            <CountryCard key={country.name.common} country={country} />
+            <div key={country.name.common} className="country-item">
+              <HeartBtn country={country} />
+              <Link to={`/countryDetails/${country.name.common}`}>
+                <img src={country.flags.png} alt={country.name.common} />
+                <p>{country.name.common}</p>
+              </Link>
+            </div>
           ))
         )}
       </div>

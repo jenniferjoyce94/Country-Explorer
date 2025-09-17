@@ -7,9 +7,9 @@ export default function CountryCard({ country }) {
     <div>
       <Navbar />
       <div className="country-card">
+        <h2>{country.name.common}</h2>
         <img src={country.flags.png} alt={`${country.name.common} flag`} />
         <HeartBtn country={country} />
-        <h2>{country.name.common}</h2>
         <p>
           Valuta:{" "}
           {country.currencies &&
