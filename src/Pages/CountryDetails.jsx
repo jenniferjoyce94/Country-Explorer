@@ -17,12 +17,6 @@ const CountryDetails = () => {
     fetchCountry();
   }, [countryName]);
 
-  function addCountry(country) {
-    const saved = JSON.parse(localStorage.getItem("savedCountries")) || [];
-    saved.push(country);
-    localStorage.setItem("savedCountries", JSON.stringify(saved));
-  }
-
   if (!country) {
     return <div>Landet hittades inte</div>;
   }

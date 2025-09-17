@@ -5,7 +5,7 @@ import savedSlice from "./savedSlice.js";
 const store = configureStore({
   reducer: {
     countries: countriesSlice.reducer,
-    saved: savedSlice.reducer,
+    saved: savedSlice,
   },
 });
 export default store;

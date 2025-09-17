@@ -1,6 +1,6 @@
 import Navbar from "../Components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { fetchCountries } from "../redux/CountriesSlice";
 import { Link } from "react-router-dom";
 

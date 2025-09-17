@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import HeartBtn from "./HeartBtn";
 
 export default function CountryCard({ country }) {
   return (
@@ -7,6 +8,7 @@ export default function CountryCard({ country }) {
       <Navbar />
       <div className="country-card">
         <img src={country.flags.png} alt={`${country.name.common} flag`} />
+        <HeartBtn country={country} />
         <h2>{country.name.common}</h2>
         <p>
           Valuta:{" "}
@@ -22,9 +24,8 @@ export default function CountryCard({ country }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Visa på karta
+          Visa på Google Maps
         </a>
-        <button onClick={() => addCountry(country)}>Spara land</button>
       </div>
     </div>
   );
