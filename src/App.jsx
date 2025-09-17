@@ -14,7 +14,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/countries" element={<Countries />} />
-          <Route path="/countries/:countryName" element={<CountryDetails />} />
+          <Route
+            path="/countryDetails/:countryName"
+            element={<CountryDetails />}
+          />
           <Route path="/collection" element={<Collection />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/leaderboard" element={<Leaderboard />} />

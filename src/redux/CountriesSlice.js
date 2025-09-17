@@ -10,7 +10,7 @@ export const fetchRegions = createAsyncThunk(
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error("Failed to fetch countries");
+      throw new Error("Problem att hämta regioner");
     }
     return await response.json();
   }
@@ -18,12 +18,12 @@ export const fetchRegions = createAsyncThunk(
 
 export const fetchCountries = createAsyncThunk(
   "countries/fetchCountries",
-  async () => {
-    const detailsUrl = `${baseUrl}/all?fields=name,capital,region,flags,population,maps`;
-    const response = await fetch(detailsUrl);
+  async (region) => {
+    const url = `${baseUrl}/region/${region}?fields=name,capital,region,flags,population,maps`;
+    const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error("Failed to fetch countries");
+      throw new Error("Problem att hämta länder");
     }
     return await response.json();
   }

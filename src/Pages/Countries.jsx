@@ -14,10 +14,10 @@ const Countries = () => {
   const handleFetch = async () => {
     if (!selectedRegion) return;
     const response = await fetch(
-      `https://restcountries.com/v3.1/region/${selectedRegion.toLowerCase()}`
+      `https://restcountries.com/v3.1/region/${selectedRegion}`
     );
     const data = await response.json();
-    dispatch(fetchCountries({ region: selectedRegion, data }));
+    dispatch(fetchCountries(selectedRegion));
   };
 
   return (
@@ -42,11 +42,8 @@ const Countries = () => {
         <div className="country-list">
           {countries.map((country) => (
             <div key={country.name.common} className="country-item">
-              <Link to={`/countries/${country.name.common}`}>
-                <img
-                  src={country.flags.png}
-                  alt={`${country.name.common} flag`}
-                />
+              <Link to={`/countryDetails/${country.name.common}`}>
+                <img src={country.flags.png} alt={country.name.common} />
                 <p>{country.name.common}</p>
               </Link>
             </div>
