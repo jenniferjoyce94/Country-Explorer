@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Countries from "./Pages/Countries";
 import Collection from "./Pages/Collection";
-import Quiz from "./Pages/Quiz";
+import QuizStart from "./Pages/QuizStart";
 import Leaderboard from "./Pages/Leaderboard";
 import CountryDetails from "./Pages/CountryDetails";
+import QuizGame from "./Components/QuizGame";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
             element={<CountryDetails />}
           />
           <Route path="/collection" element={<Collection />} />
-          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/quizstart" element={<QuizStart />} />
+          <Route path="/quiz" element={<QuizGame />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </div>

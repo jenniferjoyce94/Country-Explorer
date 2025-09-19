@@ -11,7 +11,7 @@ function Home() {
       <Link to="/Collection">
         <button>Se dina sparade länder</button>
       </Link>
-      <Link to="/Quiz">
+      <Link to="/QuizStart">
         <button>Ta en quiz</button>
       </Link>
       <Link to="/Leaderboard">

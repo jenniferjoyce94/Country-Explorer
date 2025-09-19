@@ -16,7 +16,7 @@ const Navbar = () => {
             <Link to="/collection">Dina Samlingar</Link>
           </li>
           <li className={styles.navItem}>
-            <Link to="/quiz">Quiz</Link>
+            <Link to="/quizStart">Quiz</Link>
           </li>
           <li className={styles.navItem}>
             <Link to="/leaderboard">Topplistan</Link>
