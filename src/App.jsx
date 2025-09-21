@@ -7,6 +7,7 @@ import QuizStart from "./Pages/QuizStart";
 import Leaderboard from "./Pages/Leaderboard";
 import CountryDetails from "./Pages/CountryDetails";
 import QuizGame from "./Components/QuizGame";
+import ShowScore from "./Components/ShowScore";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           />
           <Route path="/collection" element={<Collection />} />
           <Route path="/quizstart" element={<QuizStart />} />
-          <Route path="/quiz" element={<QuizGame />} />
+          <Route path="/quizgame" element={<QuizGame />} />
+          <Route path="/showScore" element={<ShowScore />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </div>

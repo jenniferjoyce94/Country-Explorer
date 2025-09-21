@@ -1,25 +1,37 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const QuizStart = () => {
   const [region, setRegion] = useState("");
-  const [namn, setNamn] = useState("");
+  const [userName, setUserName] = useState("");
+  const { status } = useSelector((state) => state.quiz);
   const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
   const navigate = useNavigate();
 
-  const handleStartQuiz = () => {
-    if (!region || !namn) {
+  const handleStartQuiz = (e) => {
+    e.preventDefault();
+    if (!region || !userName) {
       alert("Vänligen välj en region och ange ditt namn.");
       return;
     }
-    navigate("/quiz", { state: { region, namn } });
+    navigate("/quizgame", { state: { region, userName } });
   };
 
   return (
     <div>
       <Navbar />
       <h1>Starta Quiz</h1>
+      <div>
+        <label>Användarnamn:</label>
+        <input
+          type="text"
+          placeholder="Användarnamn"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+      </div>
       <select
         name="countries"
         id="countries"
@@ -33,15 +45,9 @@ const QuizStart = () => {
           </option>
         ))}
       </select>
-      <p>Ange ett användarnamn:</p>
-      <input
-        type="text"
-        placeholder="Användarnamn"
-        value={namn}
-        onChange={(e) => setNamn(e.target.value)}
-      />
-      <br />
-      <button onClick={handleStartQuiz}>Starta Quiz</button>
+      <button onClick={handleStartQuiz}>
+        {status === "loading" ? "Laddar..." : "Starta Quiz"}
+      </button>
     </div>
   );
 };

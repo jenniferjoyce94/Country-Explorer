@@ -1,103 +1,124 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import { current } from "@reduxjs/toolkit";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { use } from "react";
+import { selectCountries, fetchCountries } from "../redux/CountriesSlice";
+const totalQuestions = 15;
 
 function QuizGame() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { region, namn } = state || {};
+  const dispatch = useDispatch();
+  const { region, userName } = state || {};
 
-  const [countries, setCountries] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState([]);
-  const [current, setCurrent] = useState(0);
-  const [userAnswer, setUserAnswer] = useState("");
+  const countries = useSelector(selectCountries);
+  const status = useSelector((state) => state.countries.status);
+  const error = useSelector((state) => state.countries.error);
+  const [userAnswers, setUserAnswers] = useState([]);
   const [score, setScore] = useState(0);
-  const [totalQuestions, setTotalQuestions] = useState(15);
   const [showScore, setShowScore] = useState(false);
-  const [quizFinished, setQuizFinished] = useState(false);
+  const [answer, setAnswer] = useState("");
+  const [giveAnswer, setGiveAnswer] = useState("");
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    if (!region || !namn) {
-      navigate("/");
-      return;
+    if (!region || !userName) {
+      navigate("/quizstart");
     }
-    fetch(`https://restcountries.com/v3.1/region/${region}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCountries(data);
-        const randomQuestion = () => {
-          const randomIndex = Math.floor(Math.random() * data.length);
-          return data[randomIndex];
-        };
-        setCurrentQuestion(randomQuestion());
-      });
-  }, []);
+    dispatch(fetchCountries(region));
+  }, [region, userName, dispatch, navigate]);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (!countries || !countries.length) return;
+    const shuffled = shuffle(countries);
+    setQuestions(shuffled.slice(0, totalQuestions));
+  }, [countries]);
+
+  if (status === "loading") return <div>Laddar...</div>;
+  if (status === "failed") return <div>Ett fel uppstod: {error}</div>;
+  if (!questions.length) return <div>Inga frågor tillgängliga.</div>;
+
+  const currentCountry = questions[currentQuestion];
+
+  const saveLocalStorage = (Payload) => {
+    localStorage.setItem("quizData", JSON.stringify(Payload));
+  };
+
+  function shuffle(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+  const handleSubmitAnswer = (e) => {
     e.preventDefault();
-    if (!userAnswer) return;
+    if (!answer.trim()) return;
 
-    if (
-      userAnswer.toLowerCase().trim() ===
-      currentQuestion[current].name.common.toLowerCase()
-    ) {
-      setScore(score + 1);
-      alert("Rätt svar!");
+    const correct = answer === currentCountry.name.common;
+    if (correct) setScore(score + 1);
+    setGiveAnswer(
+      correct ? "Rätt!" : `Fel! Rätt svar är ${currentCountry.name.common}`
+    );
+    setUserAnswers([
+      ...userAnswers,
+      { question: currentCountry.name.common, answer, isCorrect: correct },
+    ]);
+    setAnswer("");
+  };
+
+  const handleBtnNext = () => {
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < totalQuestions) {
+      setCurrentQuestion(nextQuestion);
+      setGiveAnswer("");
     } else {
-      alert(`Fel svar! Rätt svar är ${currentQuestion[current].name.common}.`);
-    }
-    setUserAnswer("");
-    if (current - 1 < totalQuestions) {
-      setCurrent(current + 1);
-      setCurrentQuestion(randomQuestion(countries));
-    } else {
-      setQuizFinished(true);
       setShowScore(true);
+      saveLocalStorage({ userName, score, totalQuestions });
     }
-    if (current + 1 === totalQuestions) {
-      navigate("/resultat", { state: { score, totalQuestions, namn } });
-    }
+  };
 
-    const showResults = () => {
-      return (
-        <div>
-          <h2>Ditt Resultat</h2>
-          <p>
-            Poäng: {score} av {totalQuestions}
-          </p>
-        </div>
-      );
-    };
-
-    const randomQuestion = (countries) => {
-      const randomIndex = Math.floor(Math.random() * countries.length);
-      return countries[randomIndex];
-    };
-
-    return (
+  return (
+    <div>
+      <Navbar />
+      <h2>
+        Fråga {currentQuestion + 1} av {totalQuestions} region: {region}
+      </h2>
+      <h3>Vilket flagga tillhör detta land?</h3>
+      <span>Svara på engelska</span>
       <div>
-        <Navbar />
-        <h2>
-          Fråga {currentQuestion + 1} av {totalQuestions}
-        </h2>
         <img
-          src={currentQuestion.flags?.svg}
-          alt={currentQuestion.name?.common}
+          src={currentCountry.flags.png}
+          alt={`Flag of ${currentCountry.name.common}`}
           style={{ width: "200px", height: "100px" }}
         />
-        <form onSubmit={handleSubmit}>
-          <input
-            value={userAnswer}
-            onChange={(e) => setUserAnswer(e.target.value)}
-            placeholder="Ditt svar"
-          />
-          <button type="submit">Se svar</button>
-        </form>
       </div>
-    );
-  };
+      {giveAnswer === "" && (
+        <form onSubmit={handleSubmitAnswer}>
+          <input
+            type="text"
+            placeholder="Skriv ditt svar här"
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
+          />
+          <button type="submit"> Svara</button>
+        </form>
+      )}
+      {giveAnswer && <p>{giveAnswer}</p>}
+      {showScore ? (
+        <Link to={"/showScore"} state={{ score, totalQuestions, userName }}>
+          <button className="btnNext">Visa resultat</button>
+        </Link>
+      ) : (
+        <button className="btnNext" onClick={handleBtnNext}>
+          Nästa fråga
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default QuizGame;
