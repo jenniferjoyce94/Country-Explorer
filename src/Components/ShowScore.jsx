@@ -1,10 +1,23 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 
-function ShowScore({ score, totalQuestions, userName }) {
+function ShowScore() {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const { score, totalQuestions, userName } = state || {};
 
+  if (!state) {
+    return (
+      <div>
+        <Navbar />
+        <h2>Det finns inget resultat att visa.</h2>
+        <button onClick={() => navigate("/quizstart", { replace: true })}>
+          Starta Quiz
+        </button>
+      </div>
+    );
+  }
   return (
     <div>
       <Navbar />

@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { use } from "react";
 import { selectCountries, fetchCountries } from "../redux/CountriesSlice";
 const totalQuestions = 15;
 
@@ -15,6 +14,7 @@ function QuizGame() {
   const countries = useSelector(selectCountries);
   const status = useSelector((state) => state.countries.status);
   const error = useSelector((state) => state.countries.error);
+
   const [userAnswers, setUserAnswers] = useState([]);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
@@ -43,7 +43,14 @@ function QuizGame() {
   const currentCountry = questions[currentQuestion];
 
   const saveLocalStorage = (Payload) => {
-    localStorage.setItem("quizData", JSON.stringify(Payload));
+    try {
+      const key = "quizResults";
+      const existing = JSON.parse(localStorage.getItem(key)) || [];
+      existing.push(Payload);
+      localStorage.setItem(key, JSON.stringify(existing));
+    } catch (error) {
+      console.error("Error saving to localStorage", error);
+    }
   };
 
   function shuffle(array) {
