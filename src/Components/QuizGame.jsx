@@ -52,7 +52,7 @@ function QuizGame() {
       console.error("Error saving to localStorage", error);
     }
   };
-
+  // Fisher-Yates shuffle algorithm
   function shuffle(array) {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -65,11 +65,11 @@ function QuizGame() {
     e.preventDefault();
     if (!answer.trim()) return;
 
-    const correct = answer === currentCountry.name.common;
+    const correctName =
+      currentCountry.translations?.swe?.common || currentCountry.name.common;
+    const correct = answer.trim().toLowerCase() === correctName.toLowerCase();
     if (correct) setScore(score + 1);
-    setGiveAnswer(
-      correct ? "Rätt!" : `Fel! Rätt svar är ${currentCountry.name.common}`
-    );
+    setGiveAnswer(correct ? "Rätt!" : `Fel! Rätt svar är ${correctName}`);
     setUserAnswers([
       ...userAnswers,
       { question: currentCountry.name.common, answer, isCorrect: correct },
@@ -120,9 +120,11 @@ function QuizGame() {
           <button className="btnNext">Visa resultat</button>
         </Link>
       ) : (
-        <button className="btnNext" onClick={handleBtnNext}>
-          Nästa fråga
-        </button>
+        giveAnswer && (
+          <button className="btnNext" onClick={handleBtnNext}>
+            Nästa fråga
+          </button>
+        )
       )}
     </div>
   );

@@ -17,9 +17,15 @@ const useLocalStorage = () => {
     setSavedCountries(
       savedCountries.filter((c) => c.name.common !== countryName)
     );
+
+    const saveToLeaderboard = (entry) => {
+      const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+      leaderboard.push(entry);
+      localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+    };
   };
 
-  return { savedCountries, addCountry, removeCountry };
+  return { savedCountries, addCountry, removeCountry, saveToLeaderboard };
 };
 
 export default useLocalStorage;
