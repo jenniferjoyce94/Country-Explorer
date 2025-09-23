@@ -95,7 +95,6 @@ function QuizGame() {
         Fråga {currentQuestion + 1} av {totalQuestions} region: {region}
       </h2>
       <h3>Vilket flagga tillhör detta land?</h3>
-      <span>Svara på engelska</span>
       <div>
         <img
           src={currentCountry.flags.png}
@@ -120,11 +119,16 @@ function QuizGame() {
           <button className="btnNext">Visa resultat</button>
         </Link>
       ) : (
-        giveAnswer && (
+        giveAnswer &&
+        (currentQuestion + 1 === totalQuestions ? (
+          <Link to={"/showScore"} state={{ score, totalQuestions, userName }}>
+            <button className="btnNext">Visa resultat</button>
+          </Link>
+        ) : (
           <button className="btnNext" onClick={handleBtnNext}>
             Nästa fråga
           </button>
-        )
+        ))
       )}
     </div>
   );

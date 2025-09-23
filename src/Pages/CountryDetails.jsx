@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CountryCard from "../Components/CountryCard";
+import api from "../redux/api";
 
 const CountryDetails = () => {
   const { countryName } = useParams();
@@ -9,20 +10,22 @@ const CountryDetails = () => {
   useEffect(() => {
     const fetchCountry = async () => {
       const response = await fetch(
-        `https://restcountries.com/v3.1/name/${countryName}`
+        `${api()}/name/${countryName}?fields=name,translations,capital,region,flags,population,maps`
       );
       const data = await response.json();
       setCountry(data[0]);
     };
+
     fetchCountry();
   }, [countryName]);
 
-  if (!country) {
-    return <div>Landet hittades inte</div>;
-  }
   return (
     <div>
-      <CountryCard country={country} />
+      {country ? (
+        <CountryCard country={country} />
+      ) : (
+        <div>Landet hittades inte</div>
+      )}
     </div>
   );
 };

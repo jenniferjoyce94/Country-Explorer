@@ -5,7 +5,13 @@ import { fetchCountries } from "../redux/CountriesSlice";
 import { Link } from "react-router-dom";
 import HeartBtn from "../Components/HeartBtn";
 
-const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
+const regions = [
+  { sv: "Afrika", en: "Africa" },
+  { sv: "Amerikas", en: "Americas" },
+  { sv: "Asien", en: "Asia" },
+  { sv: "Europa", en: "Europe" },
+  { sv: "Oceanien", en: "Oceania" },
+];
 
 const Countries = () => {
   const dispatch = useDispatch();
@@ -31,8 +37,8 @@ const Countries = () => {
       >
         <option value="">Välj en region</option>
         {regions.map((region) => (
-          <option key={region} value={region}>
-            {region}
+          <option key={region.en} value={region.en}>
+            {region.sv}
           </option>
         ))}
       </select>
@@ -41,12 +47,24 @@ const Countries = () => {
       {status === "failed" && <p> Fel: {error}</p>}
       {status === "succeeded" && (
         <div className="country-list">
-          {countries.map((country) => (
-            <div key={country.name.common} className="country-item">
+          {countries.map((country, index) => (
+            <div
+              key={`${country.cca3 || country.name.common}-${index}`}
+              className="country-item"
+            >
               <HeartBtn country={country} />
-              <Link to={`/countryDetails/${country.name.common}`}>
-                <img src={country.flags.png} alt={country.name.common} />
-                <p>{country.name.common}</p>
+              <Link
+                to={`/countryDetails/${
+                  country.translations?.swe?.common || country.name.common
+                }`}
+              >
+                <img
+                  src={country.flags.png}
+                  alt={country.translations?.swe?.common || country.name.common}
+                />
+                <p>
+                  {country.translations?.swe?.common || country.name.common}
+                </p>
               </Link>
             </div>
           ))}

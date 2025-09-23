@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 const HeartBtn = ({ country }) => {
   const dispatch = useDispatch();
-  const [isSaved, setIsSaved] = useState(false);
+  const savedCountries = useSelector((state) => state.saved.savedCountries);
+  const [isSaved, setIsSaved] = useState(
+    savedCountries.some((c) => c.cca3 === country.cca3)
+  );
 
   const handleClick = () => {
     if (isSaved) {

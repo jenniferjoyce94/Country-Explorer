@@ -14,12 +14,24 @@ const Collection = () => {
         {savedCountries.length === 0 ? (
           <p>Inga sparade länder</p>
         ) : (
-          savedCountries.map((country) => (
-            <div key={country.name.common} className="country-item">
+          savedCountries.map((country, index) => (
+            <div
+              key={`${country.cca3 || country.name.common}-${index}`}
+              className="country-item"
+            >
               <HeartBtn country={country} />
-              <Link to={`/countryDetails/${country.name.common}`}>
-                <img src={country.flags.png} alt={country.name.common} />
-                <p>{country.name.common}</p>
+              <Link
+                to={`/countryDetails/${
+                  country.translations?.swe?.common || country.name.common
+                }`}
+              >
+                <img
+                  src={country.flags.png}
+                  alt={country.translations?.swe?.common || country.name.common}
+                />
+                <p>
+                  {country.translations?.swe?.common || country.name.common}
+                </p>
               </Link>
             </div>
           ))
