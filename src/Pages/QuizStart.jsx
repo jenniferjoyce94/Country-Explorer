@@ -7,7 +7,7 @@ const QuizStart = () => {
   const [region, setRegion] = useState("");
   const [userName, setUserName] = useState("");
   const { status } = useSelector((state) => state.quiz);
-  const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
+  const regions = ["Afrika", "Amerika", "Asien", "Europa", "Oceanien"];
   const navigate = useNavigate();
 
   const handleStartQuiz = (e) => {

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { selectCountries, fetchCountries } from "../redux/CountriesSlice";
-const totalQuestions = 15;
+const totalQuestions = 2;
 
 function QuizGame() {
   const { state } = useLocation();
@@ -23,11 +23,20 @@ function QuizGame() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questions, setQuestions] = useState([]);
 
+  const regionMap = {
+    Afrika: "Africa",
+    Europa: "Europe",
+    Asien: "Asia",
+    Oceanien: "Oceania",
+    Amerika: "Americas",
+  };
   useEffect(() => {
     if (!region || !userName) {
       navigate("/quizstart");
     }
-    dispatch(fetchCountries(region));
+    const apiRegion = regionMap[region] || region;
+    console.log("QuizGame region:", region, "apiRegion:", apiRegion);
+    dispatch(fetchCountries(apiRegion));
   }, [region, userName, dispatch, navigate]);
 
   useEffect(() => {
@@ -42,16 +51,6 @@ function QuizGame() {
 
   const currentCountry = questions[currentQuestion];
 
-  const saveLocalStorage = (Payload) => {
-    try {
-      const key = "quizResults";
-      const existing = JSON.parse(localStorage.getItem(key)) || [];
-      existing.push(Payload);
-      localStorage.setItem(key, JSON.stringify(existing));
-    } catch (error) {
-      console.error("Error saving to localStorage", error);
-    }
-  };
   // Fisher-Yates shuffle algorithm
   function shuffle(array) {
     const arr = [...array];
@@ -84,7 +83,6 @@ function QuizGame() {
       setGiveAnswer("");
     } else {
       setShowScore(true);
-      saveLocalStorage({ userName, score, totalQuestions });
     }
   };
 
@@ -115,13 +113,19 @@ function QuizGame() {
       )}
       {giveAnswer && <p>{giveAnswer}</p>}
       {showScore ? (
-        <Link to={"/showScore"} state={{ score, totalQuestions, userName }}>
+        <Link
+          to={"/showScore"}
+          state={{ score, totalQuestions, userName, region }}
+        >
           <button className="btnNext">Visa resultat</button>
         </Link>
       ) : (
         giveAnswer &&
         (currentQuestion + 1 === totalQuestions ? (
-          <Link to={"/showScore"} state={{ score, totalQuestions, userName }}>
+          <Link
+            to={"/showScore"}
+            state={{ score, totalQuestions, userName, region }}
+          >
             <button className="btnNext">Visa resultat</button>
           </Link>
         ) : (
