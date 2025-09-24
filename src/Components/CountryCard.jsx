@@ -24,7 +24,9 @@ export default function CountryCard({ country }) {
               return `${first.name} (${first.symbol})`;
             })()}
         </p>
-        <p>Befolkning: {country.population}</p>
+        <p>
+          Befolkning: {country.population?.toLocaleString("sv-SE") || "Okänd"}
+        </p>
         <a
           href={country.maps.googleMaps}
           target="_blank"

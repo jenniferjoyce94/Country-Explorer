@@ -10,7 +10,7 @@ const CountryDetails = () => {
   useEffect(() => {
     const fetchCountry = async () => {
       const response = await fetch(
-        `${api()}/name/${countryName}?fields=name,translations,capital,region,flags,population,maps`
+        `${api()}/name/${countryName}?fields=name,translations,capital,region,flags,population,maps,currencies`
       );
       const data = await response.json();
       setCountry(data[0]);

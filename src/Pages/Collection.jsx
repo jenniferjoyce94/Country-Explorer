@@ -20,11 +20,7 @@ const Collection = () => {
               className="country-item"
             >
               <HeartBtn country={country} />
-              <Link
-                to={`/countryDetails/${
-                  country.translations?.swe?.common || country.name.common
-                }`}
-              >
+              <Link to={`/countries/${country.name.common}`}>
                 <img
                   src={country.flags.png}
                   alt={country.translations?.swe?.common || country.name.common}

@@ -13,7 +13,7 @@ const Navbar = () => {
             <Link to="/countries">Lär dig om länder</Link>
           </li>
           <li className={styles.navItem}>
-            <Link to="/collection">Dina Samlingar</Link>
+            <Link to="/collection">Dina Samling</Link>
           </li>
           <li className={styles.navItem}>
             <Link to="/quizStart">Quiz</Link>
