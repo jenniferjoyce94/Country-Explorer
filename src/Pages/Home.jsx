@@ -14,19 +14,19 @@ function Home() {
         quiz!
       </p>
       <div className={styles.buttonContainer}>
-        <Link to="/Countries">
+        <Link to="/countries">
           <button className={styles.button}>Lär dig om länder</button>
         </Link>
 
-        <Link to="/Collection">
+        <Link to="/collection">
           <button className={styles.button}>Se dina sparade länder</button>
         </Link>
 
-        <Link to="/QuizStart">
+        <Link to="/quizstart">
           <button className={styles.button}>Ta en quiz</button>
         </Link>
 
-        <Link to="/Leaderboard">
+        <Link to="/leaderboard">
           <button className={styles.button}>Se topplistan</button>
         </Link>
       </div>

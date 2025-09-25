@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import HeartBtn from "./HeartBtn";
 import styles from "./styles/CountryCard.module.css";

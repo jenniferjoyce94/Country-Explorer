@@ -31,8 +31,6 @@ function ShowScore() {
           entry.score === score &&
           entry.region === regionSv
       );
-
-      // Spara bara om denna exakta entry inte redan finns
       if (!findUser) {
         const newEntry = {
           userName,

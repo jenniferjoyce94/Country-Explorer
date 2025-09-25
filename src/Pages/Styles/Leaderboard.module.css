@@ -1,7 +1,7 @@
 .container {
   padding: 40px 20px;
   background-color: var(--primary-bg);
-  min-height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,28 +16,6 @@
   font-weight: 600;
 }
 
-.startQuizBtn {
-  margin-top: 20px;
-  width: 220px;
-  padding: 12px 24px;
-  font-size: 1rem;
-  border: 1px solid gray;
-  border-radius: 25px;
-  background-color: var(--white);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.startQuizBtn:hover {
-  cursor: pointer;
-  background-color: var(--text-primary);
-  border: 1px solid #e0e0e0;
-  transform: translateY(-1px);
-}
-
 .regionButtons {
   display: flex;
   justify-content: center;
@@ -46,8 +24,7 @@
   flex-wrap: wrap;
 }
 
-.regionButton,
-.startQuizBtn {
+.regionButton {
   padding: 12px 24px;
   font-size: 1rem;
   border: none;
@@ -59,7 +36,31 @@
   font-weight: 500;
 }
 
-.regionButton:hover,
+.regionButton:hover {
+  background-color: var(--button-hover);
+  border: 1px solid var(--button-hover);
+  transform: translateY(-1px);
+}
+
+.startQuizBtn {
+  margin-top: 30px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--region-btn-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  font-weight: 500;
+}
+
+.startQuizBtn a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
 .startQuizBtn:hover {
   background-color: var(--button-hover);
   border: 1px solid var(--button-hover);
@@ -74,6 +75,7 @@
   text-align: center;
   margin-top: 30px;
   background-color: white;
+  margin-bottom: auto;
   border-radius: 15px;
   padding: 25px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);

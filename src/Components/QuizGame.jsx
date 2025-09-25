@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { selectCountries, fetchCountries } from "../redux/CountriesSlice";
 import styles from "./styles/QuizGame.module.css";
-const totalQuestions = 2;
+const totalQuestions = 15;
 
 function QuizGame() {
   const { state } = useLocation();
@@ -36,7 +36,6 @@ function QuizGame() {
       navigate("/quizstart");
     }
     const apiRegion = regionMap[region] || region;
-    console.log("QuizGame region:", region, "apiRegion:", apiRegion);
     dispatch(fetchCountries(apiRegion));
   }, [region, userName, dispatch, navigate]);
 

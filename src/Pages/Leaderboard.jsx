@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
-import { use, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import styles from "./Styles/Leaderboard.module.css";
 
 const regions = ["Alla", "Afrika", "Amerika", "Asien", "Europa", "Oceanien"];
@@ -9,15 +9,14 @@ const Leaderboard = () => {
   const [selectedRegion, setSelectedRegion] = useState("Alla");
   const leaderboardNew = useMemo(() => {
     try {
-      const rawData = localStorage.getItem("leaderboard");
-      const arr = rawData ? JSON.parse(rawData) : [];
-      if (!Array.isArray(arr)) {
-        console.error("Leaderboard i localStorage är inte en array:", arr);
+      const data = localStorage.getItem("leaderboard");
+      const array = data ? JSON.parse(data) : [];
+      if (!Array.isArray(array)) {
+        console.error("Leaderboard i localStorage är inte en array:", array);
         return [];
       }
-      return arr;
+      return array;
     } catch (e) {
-      console.error("Fel vid tolkning av leaderboard i localStorage", e);
       return [];
     }
   }, []);
@@ -43,8 +42,6 @@ const Leaderboard = () => {
 
     return filteredData.sort((a, b) => b.score - a.score).slice(0, 10);
   }, [selectedRegion, filterRegion, leaderboardNew]);
-
-  console.log("Leaderboard från localStorage:", leaderboardNew);
 
   return (
     <div className={styles.container}>

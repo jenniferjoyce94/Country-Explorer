@@ -17,7 +17,6 @@ export const fetchCountries = createAsyncThunk(
   "countries/fetchCountries",
   async (region) => {
     const url = `${api()}/region/${region}?fields=name,translations,capital,region,flags,population,maps,altSpellings`;
-    console.log("fetchCountries URL:", url);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Problem att hämta länder");

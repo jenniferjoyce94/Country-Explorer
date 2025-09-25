@@ -5,8 +5,13 @@
   font-size: 1.3rem;
   color: #2c3e50;
   transition: transform 0.2s;
-  &:hover {
-    transform: scale(1.2);
-    color: #2c3e50;
-  }
+  outline: none;
+}
+
+.heartBtn:focus {
+  outline: none;
+}
+
+.heartBtn:hover {
+  transform: scale(1.1);
 }
