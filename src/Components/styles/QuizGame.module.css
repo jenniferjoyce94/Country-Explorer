@@ -1,0 +1,81 @@
+.container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  max-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 30px;
+}
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.flagImage {
+  width: auto;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px 0 20px 0;
+}
+
+.inputField {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 280px;
+}
+
+.submitButton {
+  margin-top: 20px;
+  width: 300px;
+  display: flex;
+  gap: 15px;
+  border: gray 1px solid;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+    background-color: #e0e0e0;
+    border: 1px solid #e0e0e0;
+  }
+}
+
+.answerSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btnNext {
+  margin-top: 20px;
+  width: 220px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: 1px solid gray;
+  border-radius: 25px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnNext:hover {
+  cursor: pointer;
+  background-color: #e0e0e0;
+  border: 1px solid #e0e0e0;
+  transform: translateY(-1px);
+}

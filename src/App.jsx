@@ -3,8 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Countries from "./Pages/Countries";
 import Collection from "./Pages/Collection";
-import Quiz from "./Pages/Quiz";
+import QuizStart from "./Pages/QuizStart";
 import Leaderboard from "./Pages/Leaderboard";
+import CountryDetails from "./Pages/CountryDetails";
+import QuizGame from "./Components/QuizGame";
+import ShowScore from "./Components/ShowScore";
 
 function App() {
   return (
@@ -13,8 +16,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/countries" element={<Countries />} />
+          <Route path="/countries/:countryName" element={<CountryDetails />} />
           <Route path="/collection" element={<Collection />} />
-          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/quizstart" element={<QuizStart />} />
+          <Route path="/quizgame" element={<QuizGame />} />
+          <Route path="/showScore" element={<ShowScore />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </div>

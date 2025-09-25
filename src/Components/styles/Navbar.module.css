@@ -1,0 +1,30 @@
+.Navbar {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--region-btn-bg);
+  color: var(--text-secondary);
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  color: var(--text-secondary);
+  margin: 0;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.navItem {
+  background-color: var(--primary-bg);
+  padding: 12px 24px;
+  border: none;
+  border-radius: 20px;
+}
+
+.navItem a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}

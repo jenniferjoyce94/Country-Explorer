@@ -1,0 +1,65 @@
+.container {
+  padding: 20px;
+  background-color: var(--card-bg);
+  max-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 30px;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.inputInfo {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.inputField {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  width: 330px;
+  font-size: 1rem;
+}
+
+.selectRegion {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  width: 330px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.startButton {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--region-btn-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  font-weight: 500;
+}
+
+.startButton:hover {
+  background-color: var(--border-color);
+  border: 1px solid var(--button-hover);
+  transform: translateY(-1px);
+}
+
+label {
+  font-size: 1.2rem;
+  font-weight: 500;
+}

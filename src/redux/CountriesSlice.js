@@ -1,12 +1,27 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import api from "./api";
+
+export const fetchRegions = createAsyncThunk(
+  "countries/fetchRegions",
+  async () => {
+    const url = `${api()}/all?fields=region`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Problem att hämta regioner");
+    }
+    return await response.json();
+  }
+);
 
 export const fetchCountries = createAsyncThunk(
   "countries/fetchCountries",
-  async () => {
-    const response = await fetch("https://restcountries.com/v3.1/all");
-    const data = await response.json();
-    return data;
+  async (region) => {
+    const url = `${api()}/region/${region}?fields=name,translations,capital,region,flags,population,maps,altSpellings`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Problem att hämta länder");
+    }
+    return await response.json();
   }
 );
 
@@ -34,5 +49,7 @@ const countriesSlice = createSlice({
   },
 });
 
-export const { addCountry, removeCountry } = countriesSlice.actions;
+export const selectCountries = (state) => state.countries.countries;
+export const getCountriesStatus = (state) => state.countries.status;
+export const getCountriesError = (state) => state.countries.error;
 export default countriesSlice;
