@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { selectCountries, fetchCountries } from "../redux/CountriesSlice";
+import styles from "./styles/QuizGame.module.css";
 const totalQuestions = 2;
 
 function QuizGame() {
@@ -87,53 +88,58 @@ function QuizGame() {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <Navbar />
-      <h2>
+      <h2 className={styles.title}>
         Fråga {currentQuestion + 1} av {totalQuestions} region: {region}
       </h2>
-      <h3>Vilket flagga tillhör detta land?</h3>
-      <div>
-        <img
-          src={currentCountry.flags.png}
-          alt={`Flag of ${currentCountry.name.common}`}
-          style={{ width: "200px", height: "100px" }}
-        />
-      </div>
-      {giveAnswer === "" && (
-        <form onSubmit={handleSubmitAnswer}>
-          <input
-            type="text"
-            placeholder="Skriv ditt svar här"
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-          />
-          <button type="submit"> Svara</button>
-        </form>
-      )}
-      {giveAnswer && <p>{giveAnswer}</p>}
-      {showScore ? (
-        <Link
-          to={"/showScore"}
-          state={{ score, totalQuestions, userName, region }}
-        >
-          <button className="btnNext">Visa resultat</button>
-        </Link>
-      ) : (
-        giveAnswer &&
-        (currentQuestion + 1 === totalQuestions ? (
+      <h3 className={styles.question}>Vilken flagga tillhör detta land?</h3>
+      <img
+        src={currentCountry.flags.png}
+        alt={`Flag of ${currentCountry.name.common}`}
+        className={styles.flagImage}
+      />
+
+      <div className={styles.answerSection}>
+        {giveAnswer === "" && (
+          <form onSubmit={handleSubmitAnswer}>
+            <input
+              className={styles.inputField}
+              type="text"
+              placeholder="Skriv ditt svar här"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+            />
+            <button type="submit" className={styles.submitButton}>
+              {" "}
+              Svara
+            </button>
+          </form>
+        )}
+        {giveAnswer && <p>{giveAnswer}</p>}
+        {showScore ? (
           <Link
             to={"/showScore"}
             state={{ score, totalQuestions, userName, region }}
           >
-            <button className="btnNext">Visa resultat</button>
+            <button className={styles.btnNext}>Visa resultat</button>
           </Link>
         ) : (
-          <button className="btnNext" onClick={handleBtnNext}>
-            Nästa fråga
-          </button>
-        ))
-      )}
+          giveAnswer &&
+          (currentQuestion + 1 === totalQuestions ? (
+            <Link
+              to={"/showScore"}
+              state={{ score, totalQuestions, userName, region }}
+            >
+              <button className={styles.btnNext}>Visa resultat</button>
+            </Link>
+          ) : (
+            <button className={styles.btnNext} onClick={handleBtnNext}>
+              Nästa fråga
+            </button>
+          ))
+        )}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "./Navbar";
+import styles from "./styles/ShowScore.module.css";
 
 function ShowScore() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ function ShowScore() {
 
   if (!state) {
     return (
-      <div>
+      <div className={styles.showScore}>
         <Navbar />
         <h2>Det finns inget resultat att visa.</h2>
         <button onClick={() => navigate("/quizstart", { replace: true })}>
@@ -56,17 +57,22 @@ function ShowScore() {
     );
   }
   return (
-    <div>
+    <div className={styles.container}>
       <Navbar />
-      <h2>Grattis {userName}!</h2>
-      <h3>Ditt Resultat</h3>
-      <p>
-        Poäng: {score} av {totalQuestions}
-      </p>
-      <button onClick={() => navigate("/leaderboard", { replace: true })}>
+      <h2 className={styles.title}>Grattis {userName}!</h2>
+      <h3 className={styles.score}>
+        <strong>Du fick: </strong> {score} av {totalQuestions}
+      </h3>
+      <button
+        onClick={() => navigate("/leaderboard", { replace: true })}
+        className={styles.leaderboardBtn}
+      >
         Visa Topplistan
       </button>
-      <button onClick={() => navigate("/quizstart", { replace: true })}>
+      <button
+        onClick={() => navigate("/quizstart", { replace: true })}
+        className={styles.restartBtn}
+      >
         Starta om Quiz
       </button>
     </div>

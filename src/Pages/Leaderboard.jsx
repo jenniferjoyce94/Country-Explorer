@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import { use, useMemo, useState } from "react";
+import styles from "./Styles/Leaderboard.module.css";
 
 const regions = ["Alla", "Afrika", "Amerika", "Asien", "Europa", "Oceanien"];
 
@@ -46,25 +47,29 @@ const Leaderboard = () => {
   console.log("Leaderboard från localStorage:", leaderboardNew);
 
   return (
-    <div>
+    <div className={styles.container}>
       <Navbar />
-      <h1>Topplistan</h1>
-      <select
-        value={selectedRegion}
-        onChange={(e) => setSelectedRegion(e.target.value)}
-      >
+      <h1 className={styles.title}>Topplistan</h1>
+      <div className={styles.regionButtons}>
         {regions.map((region) => (
-          <option key={region} value={region}>
+          <button
+            key={region}
+            onClick={() => setSelectedRegion(region)}
+            className={`${styles.regionButton} ${
+              selectedRegion === region ? styles.active : ""
+            }`}
+          >
             {region}
-          </option>
+          </button>
         ))}
-      </select>
+      </div>
       {topPlayers.length === 0 ? (
-        <p>Det finns inga resultat att visa för denna region ännu.</p>
+        <p className={styles.noResults}>
+          Det finns inga resultat att visa för denna region ännu.
+        </p>
       ) : (
-        <div key={selectedRegion}>
-          <h2>Topplista för {selectedRegion}</h2>
-          <ol>
+        <div key={selectedRegion} className={styles.results}>
+          <ol className={styles.playerList}>
             {topPlayers.map((x, index) => (
               <li key={index}>
                 {x.userName}: {x.score} poäng
@@ -73,7 +78,7 @@ const Leaderboard = () => {
           </ol>
         </div>
       )}
-      <button>
+      <button className={styles.startQuizBtn}>
         <Link to="/quizstart">Starta Quizet</Link>
       </button>
     </div>
